@@ -4,12 +4,9 @@ title: About
 permalink: /about/
 ---
 
-Some information about you!
-
-### More Information
-
-A place to include any other types of information that you'd like to include about yourself.
+*Interested in knowing how things work, reinventing the wheel*  
+*Interested in breaking them, keep learning*
 
 ### Contact me
 
-[email@domain.com](mailto:email@domain.com)
+[onepwnman@gmail.com](mailto:onepwnman@gmail.com)
