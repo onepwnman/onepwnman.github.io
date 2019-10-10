@@ -8,6 +8,9 @@ name: ONEPWNMAN
 # Short bio or description (displayed in the header)
 description:  Under the hood
 
+# For open graph tags
+title: ONEPWNMAN
+
 #
 # Flags below are optional
 #
