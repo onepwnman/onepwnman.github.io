@@ -40,7 +40,7 @@
 {% if page.image %}
   <meta content="{{ page.image }}" property="og:image">
 {% else %}
-  <meta content="{{ site.og_image }}" property="og:image">
+  <meta content="{{ site.url }}{{ site.og_image }}" property="og:image">
 {% endif %}
 {% if page.categories %}
   {% for category in page.categories limit:1 %}
