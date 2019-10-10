@@ -4,8 +4,13 @@ title: About
 permalink: /about/
 ---
 
-*Interested in knowing how things work, reinventing the wheel*  
-*Interested in breaking them, keep learning*
+
+
+
+Interested in knowing how things work, reinventing the wheel  
+Interested in breaking them, keep learning
+
+      
 
 ### Contact me
 
