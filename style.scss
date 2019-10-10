@@ -363,9 +363,9 @@ img {
 
 
 .site-description {
-  margin: 0 0 0 0;
+  margin: -5px 0 0 0;
   color: $gray;
-  font-size: 10px;
+  font-size: 20px;
 
   @include mobile {
     margin: 3px 0;
