@@ -1,15 +1,20 @@
 ---
 layout: post
-title: "Disjoint Set Algorithm"
-tags: [sample post, code, highlighting]
-comments: true
+title: "Disjoint-Set (Union-Find) Data Structure"
+tags: [Algorithm & Data Structure, Tree, Python]
 ---
 
-Demo post displaying the various ways of highlighting code in Markdown.
+*Disjoint-Set* 자료구조는 많은 서로소 부분 집합들로 나눠진 원소들에 대한 정보를 저장하고 조작하는 자료 구조입니다.[^1]  *Disjoint-Set*은 **Union**과 **Find**연산을 제공하며 Union-Find Set이라 불리기도 합니다. **Union**과 **Find**연산은 Linkedlist와 Tree로 구현될 수 있으며 Linkedlist로 구현시에 	 앞의 설명만으로는 Disjoint-Set이 무엇인지 잘 이해가 가지 않을 것이다. 예를 통해 하나씩 살펴보자.   
 
-Syntax highlighting is a feature that displays source code, in different colors and fonts according to the category of terms. This feature facilitates writing in a structured language such as a programming language or a markup language as both structures and syntax errors are visually distinct. Highlighting does not affect the meaning of the text itself; it is intended only for human readers.[^1]
 
-[^1]: <http://en.wikipedia.org/wiki/Syntax_highlighting>
+[^1]: <https://en.wikipedia.org/wiki/Disjoint-set_data_structure>
+
+![Disjoint-set](/assets/images/disjoint-set/disjoint-set1.jpg "Disjoint-Set")
+
+|  <center>1</center> |  <center>1</center> |  <center>1</center> |  <center>1</center> |  <center>1</center> |  <center>1</center> |  <center>1</center> |  <center>1</center> |  <center>1</center> |  <center>1</center> |  <center>1</center>  |
+
+
+
 
 ### Highlighted Code Blocks
 
@@ -45,14 +50,10 @@ module Jekyll
       @name = 'index.html'
       self.process(@name)
       self.read_yaml(File.join(base, '_layouts'), 'tag_index.html')
-      self.data['tag'] = tag
-      tag_title_prefix = site.config['tag_title_prefix'] || 'Tagged: '
       tag_title_suffix = site.config['tag_title_suffix'] || '&#8211;'
       self.data['title'] = "#{tag_title_prefix}#{tag}"
       self.data['description'] = "An archive of posts tagged #{tag}."
     end
-  end
-end
 ```
 
 
