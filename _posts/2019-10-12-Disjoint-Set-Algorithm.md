@@ -9,7 +9,7 @@ tags: [Algorithm & Data Structure, Tree, Python]
 
 [^1]: <https://en.wikipedia.org/wiki/Disjoint-set_data_structure>
 
-![Disjoint-set]({{ site.url }}/assets/images/disjoint-set/disjoint-set1.jpg "Disjoint-Set")
+![Disjoint-set](/assets/images/disjoint-set/disjoint-set1.jpg "Disjoint-Set")
 
 |  <center>1</center> |  <center>1</center> |  <center>1</center> |  <center>1</center> |  <center>1</center> |  <center>1</center> |  <center>1</center> |  <center>1</center> |  <center>1</center> |  <center>1</center> |  <center>1</center>  |
 
