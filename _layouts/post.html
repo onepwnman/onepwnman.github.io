@@ -24,6 +24,12 @@ layout: default
   <div class="entry">
     {{ content }}
   </div>
+  
+  <!-- Putting Reference on the bottom of the page
+  {% if page.reference %}
+    {% include reference.html%}
+  {% endif %} 
+  -->
 
   <div class="pagination">
     {% if page.previous.url %}
