@@ -4,7 +4,8 @@ title: "Disjoint-Set (Union-Find) Data Structure"
 tags: [Algorithm & Data Structure, Tree, Python]
 ---
 
-*Disjoint-Set* 자료구조는 많은 서로소 부분 집합들로 나눠진 원소들에 대한 정보를 저장하고 조작하는 자료 구조입니다.[^1]  *Disjoint-Set*은 **Union**과 **Find**연산을 제공하며 Union-Find Set이라 불리기도 합니다.    
+*Disjoint-Set* 자료구조는 많은 서로소 부분 집합들로 나눠진 원소들에 대한 정보를 저장하고 조작하는 자료 구조입니다.[^1]  *Disjoint-Set*은 **Union**과 **Find**연산을 제공하며 Union-Find Set이라 불리기도 합니다.  
+
 **Union**과 **Find**연산은 Linkedlist와 Tree로 구현될 수 있으며 Linkedlist로 구현시에 시간복잡도는 *O(n)* 시간이지만 Tree로 구현시 최적화를 통해 최대 *$$O(\alpha(n))$$*시간으로 줄일 수 있습니다.      
 $$O(\alpha(n))$$은 아커만 함수(Ackermann function)의 역함수로 5이하의 값을 가지기 때문에 실질적으로 $$O(1)$$시간으로 보아도 무방합니다.     
 또한 Disjoint-Set 자료구조는 최소신장트리(Minimum Spanning Tree)를 찾는 쿠르스칼(Kruskal) 알고리즘에 사용됩니다.     
@@ -15,9 +16,6 @@ $$O(\alpha(n))$$은 아커만 함수(Ackermann function)의 역함수로 5이하
 다음 그림과 같이 7개의 부분 집합이 있고 그 밑의 array에는 각 부분집합의 부모의 값을 가지고 있다고 해보겠습니다.
 ![Disjoint-set](/assets/images/disjoint-set/disjoint-set1.jpg "Disjoint-Set")
 
-| <center>Parent[0]</center> |  <center>Parent[1]</center> |  <center>Parent[2]</center> |  <center>Parent[3]</center> |  <center>Parent[4]</center> |  <center>Parent[5]</center> |  <center>Parent[6]</center> |
-|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-|0|1|2|3|4|5|6|
 
 초기의 부분집합은 원소가 각각 하나이기 때문에 각각의 부모는 자기자신이 됩니다.           
 
