@@ -22,14 +22,20 @@ layout: default
   </div><br><br>
 
   <div class="entry">
+    <br> <br> <br> 
     {{ content }}
   </div>
   
-  <!-- Putting Reference on the bottom of the page
+  <!-- Putting Reference on the bottom of the page -->
   {% if page.reference %}
-    {% include reference.html%}
+    <br> <br> <br>
+    <h2>Reference</h1>
+    {% for ref in page.reference %}
+      <a href="{{ ref }}" title="{{ ref }}">
+        <em>{{ ref }}</em>
+      </a>
+    {% endfor %}
   {% endif %} 
-  -->
 
   <div class="pagination">
     {% if page.previous.url %}
