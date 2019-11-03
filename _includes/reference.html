@@ -1,0 +1,13 @@
+    <br> <br> <br>
+    <h2>Reference</h1>
+    {% for ref in page.reference %}
+      {% for link in ref %}
+        &nbsp;&nbsp;
+        <a href="{{ link[1] }}" title="{{ link[1] }}">
+          {{ link[0] }}:
+          <em>&nbsp;&nbsp;&nbsp;{{ link[1] }}</em>
+        </a>
+        <br>
+      {% endfor %}
+    {% endfor %}
+

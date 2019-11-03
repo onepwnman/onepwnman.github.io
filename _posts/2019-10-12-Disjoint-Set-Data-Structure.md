@@ -1,16 +1,24 @@
 ---
 layout: post
-title: "Disjoint-Set (Union-Find) Data Structure"
-tags: [Algorithm & Data Structure, Tree, Python]
-reference: https://en.wikipedia.org/wiki/Disjoint-set_data_structure 
+title: "Disjoint-Set(Union-Find) 자료구조"
+tags: [Algorithm & Data Structure, Tree, Python, Union-Find]
+reference: 
+  - "Disjoint set"       : https://en.wikipedia.org/wiki/Disjoint-set_data_structure 
+  - "Kruskal Algorithm"   : https://onepwnman.github.io/MST
 ---
 
-[*Disjoint-Set*](https://en.wikipedia.org/wiki/Disjoint-set_data_structure "https://en.wikipedia.org/wiki/Disjoint-set_data_structure") 자료구조는 많은 서로소 부분 집합들로 나눠진 원소들에 대한 정보를 저장하고 조작하는 자료 구조입니다. *Disjoint-Set*은 **Union**과 **Find**연산을 제공하며 *Union-Find Set*이라 불리기도 합니다.
+[Disjoint-Set](https://en.wikipedia.org/wiki/Disjoint-set_data_structure "https://en.wikipedia.org/wiki/Disjoint-set_data_structure") 자료구조는 많은 서로소 부분 집합들로 나눠진 원소들에 대한 정보를 저장하고 조작하는 자료 구조입니다. `Disjoint-Set`은 **Union**과 **Find**연산을 제공하며 `Union-Find Set`이라 불리기도 합니다.
 
 **Union**과 **Find**연산은 Linkedlist와 Tree로 구현될 수 있으며 Linkedlist로 구현시에 시간복잡도는 $$O(n)$$시간이지만 Tree로 구현시 최적화를 통해 최소 $$O(\alpha(n))$$시간으로 줄일 수 있습니다.      
 여기서 $$O(\alpha(n))$$은 아커만 함수(Ackermann function)의 역함수로 5이하의 값을 가지기 때문에 실질적으로 상수 시간에 연산을 수행 할 수 있습니다.  
-또한 Disjoint-Set 자료구조는 최소신장트리(Minimum Spanning Tree)를 찾는 [쿠르스칼(Kruskal) 알고리즘](https://en.wikipedia.org/wiki/Kruskal%27s_algorithm "https://en.wikipedia.org/wiki/Kruskal%27s_algorithm")에 사용되기도 하는듯 알아두면 굉장히 유용하게 쓸 수 있습니다.  
-지금 부터 예를 통해 살펴보고 python으로 구현해보도록 하겠습니다.  
+
+또한 `Disjoint-Set` 자료구조는 [최소신장트리(Minimum Spanning Tree)](https://onepwnman.github.io/MST "https://onepwnman.github.io/MST")를 찾는 [Kruskal 알고리즘](https://onepwnman.github.io/MST "https://onepwnman.github.io/MST")에 사용되기도 하는듯 알아두면 굉장히 유용하게 쓸 수 있습니다.  
+
+[Kruskal 알고리즘](https://onepwnman.github.io/MST "https://onepwnman.github.io/MST")에 대한 코드는 다음 포스트를 참고하시기 바랍니다.
+
+{% include link.html link="https://onepwnman.github.io/MST" description="Kruskal Algorithm" %}
+
+지금 부터 `Disjoint-Set`에 대하여 예를 통해 살펴보고 python으로 구현해보도록 하겠습니다.  
 
 <br> 
 ### Step by Step
@@ -53,8 +61,8 @@ def find(x):
 ![Disjoint-set](/assets/images/disjoint-set/disjoint-set4.png "Disjoint-Set")  
  치우쳐진 Tree는 Linkedlist와 유사하게 작동하므로 $$O(n)$$의 시간복잡도를 갖습니다. 시간복잡도를 줄이려면 최적화가 필요합니다.    
 
-여기서 *rank*의 개념을 도입시켜 **Union** 연산을 개선시킬 수 있습니다.  
-  각각의 집합은 *rank*를 갖습니다. *rank*는 0의 초기값을 갖으며 rank의 크기란 결국 tree의 높이를 나타냅니다.
+여기서 `rank` 의 개념을 도입시켜 **Union** 연산을 개선시킬 수 있습니다.  
+  각각의 집합은 `rank` 를 갖습니다. `rank` 는 0의 초기값을 갖으며 `rank` 의 크기란 결국 tree의 높이를 나타냅니다.
 
 ```python
 def union(x, y):
@@ -65,13 +73,14 @@ def union(x, y):
     else: parent[y] = x
     if rank[x] == rank[y]: rank[y] += 1
 ```
-**Union** 연산을 실행시에 Tree의 *rank* 즉 Tree의 높이가 낮은 노드에 subtree가 붙게됩니다.  
+**Union** 연산을 실행시에 Tree의 `rank` 즉 Tree의 높이가 낮은 노드에 subtree가 붙게됩니다.  
 
 
 
 <br>
 **Union**연산 뿐만아니라 **Find** 연산 또한 개선하여 성능을 향상시킬 수 있습니다.  
 **Find** 연산은 여러번 수행 하더라도 최종 parent의 값은 변경이 되지 않는다는 성질이 있습니다.   
+
 위의 치우쳐진 Tree에서 `find(6)`을 실행하였을 때를 생각해 봅시다.   
 `find(6)`의 최종 Parent를 알고난 후에는 6의 Parent를 최종 Parent인 0으로 옮길 수 있습니다. 이렇게 하면 다음 `find(6)` call했을때에 결과를 바로 return 하게 됩니다.
 또한 호출경로에 있는 `find(5)`, `find(4)`, `find(3)`, `find(2)` 모두 최종 Parent에 직접 연결해 줄 수 있습니다.  이는 마치 [Dynamic Programming](https://en.wikipedia.org/wiki/Dynamic_programming "https://en.wikipedia.org/wiki/Dynamic_programming")의 [Memorization](https://en.wikipedia.org/wiki/Memoization "https://en.wikipedia.org/wiki/Memoization")과 유사하다고 볼 수 있습니다.  

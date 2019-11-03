@@ -28,13 +28,7 @@ layout: default
   
   <!-- Putting Reference on the bottom of the page -->
   {% if page.reference %}
-    <br> <br> <br>
-    <h2>Reference</h1>
-    {% for ref in page.reference %}
-      <a href="{{ ref }}" title="{{ ref }}">
-        <em>{{ ref }}</em>
-      </a>
-    {% endfor %}
+    {% include reference.html %}
   {% endif %} 
 
   <div class="pagination">
