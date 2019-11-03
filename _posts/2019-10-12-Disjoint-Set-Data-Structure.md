@@ -3,8 +3,15 @@ layout: post
 title: "Disjoint-Set(Union-Find) 자료구조"
 tags: [Algorithm & Data Structure, Tree, Python, Union-Find]
 reference: 
-  - "Disjoint set"       : https://en.wikipedia.org/wiki/Disjoint-set_data_structure 
-  - "Kruskal Algorithm"   : https://onepwnman.github.io/MST
+  - "Disjoint set"          : https://en.wikipedia.org/wiki/Disjoint-set_data_structure 
+  - "Kruskal Algorithm"     : https://en.wikipedia.org/wiki/Kruskal%27s_algorithm
+  - "Minimum Spanning Tree" : https://en.wikipedia.org/wiki/Minimum_spanning_tree
+  - "Dynamic Programming"   : https://en.wikipedia.org/wiki/Dynamic_programming
+  - "Memorization"          : https://en.wikipedia.org/wiki/Memoization
+
+mst: https://en.wikipedia.org/wiki/Minimum_spanning_tree
+kruskal: https://en.wikipedia.org/wiki/Kruskal%27s_algorithm 
+
 ---
 
 [Disjoint-Set](https://en.wikipedia.org/wiki/Disjoint-set_data_structure "https://en.wikipedia.org/wiki/Disjoint-set_data_structure") 자료구조는 많은 서로소 부분 집합들로 나눠진 원소들에 대한 정보를 저장하고 조작하는 자료 구조입니다. `Disjoint-Set`은 **Union**과 **Find**연산을 제공하며 `Union-Find Set`이라 불리기도 합니다.
@@ -12,9 +19,9 @@ reference:
 **Union**과 **Find**연산은 Linkedlist와 Tree로 구현될 수 있으며 Linkedlist로 구현시에 시간복잡도는 $$O(n)$$시간이지만 Tree로 구현시 최적화를 통해 최소 $$O(\alpha(n))$$시간으로 줄일 수 있습니다.      
 여기서 $$O(\alpha(n))$$은 아커만 함수(Ackermann function)의 역함수로 5이하의 값을 가지기 때문에 실질적으로 상수 시간에 연산을 수행 할 수 있습니다.  
 
-또한 `Disjoint-Set` 자료구조는 [최소신장트리(Minimum Spanning Tree)](https://onepwnman.github.io/MST "https://onepwnman.github.io/MST")를 찾는 [Kruskal 알고리즘](https://onepwnman.github.io/MST "https://onepwnman.github.io/MST")에 사용되기도 하는듯 알아두면 굉장히 유용하게 쓸 수 있습니다.  
+또한 `Disjoint-Set` 자료구조는 [최소신장트리(Minimum Spanning Tree)]({{ page.mst }} "{{ page.mst }}")를 찾는 [Kruskal 알고리즘]({{ page.kruskal }} "{{ page.kruskal }}")에 사용되기도 하는듯 알아두면 굉장히 유용하게 쓸 수 있습니다.  
 
-[Kruskal 알고리즘](https://onepwnman.github.io/MST "https://onepwnman.github.io/MST")에 대한 코드는 다음 포스트를 참고하시기 바랍니다.
+[Kruskal 알고리즘]({{ page.kruskal }} "{{ page.kruskal }}")에 대한 코드는 다음 포스트를 참고하시기 바랍니다.
 
 {% include link.html link="https://onepwnman.github.io/MST" description="Kruskal Algorithm" %}
 
