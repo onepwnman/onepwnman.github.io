@@ -16,6 +16,7 @@ gcode: https://reprap.org/wiki/G-code
 
 ---
 
+## Table of contents
 > * &nbsp;[개발 시작 계기](#개발-시작-계기)
 > * &nbsp;[구성요소, 사용한 스킬 셋](#구성요소-사용한-스킬-셋)
 > * &nbsp;[서버 사이드 구조](#서버-사이드-구조)
