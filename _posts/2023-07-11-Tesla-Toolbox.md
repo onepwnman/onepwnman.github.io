@@ -1,7 +1,6 @@
 ---
 layout: post
-title: "An attempt to find bugs on the Tesla toolbox"
-tags: [Tesla, Websocket, Diagnostic, DoS, Directory listing, XSS]
+title: "An attempt to find bugs on the Tesla toolbox" tags: [Tesla, Websocket, Diagnostic, DoS, Directory listing, XSS]
 ---
 
 Several months ago, I had the opportunity to examine the Toolbox, a web-based diagnostic interface for Tesla vehicles. During that time, I was using an older firmware version, which enabled me to discover a few bugs that had already been patched.
@@ -13,13 +12,15 @@ Most vehicles have an OBD2 port and offer diagnostic services through CAN commun
 
 For the Model 3 and Model Y, you can access the diagnostic service by connecting your Tesla and PC using a cable as shown in the figure below. One end of the cable connects to a PC via an RJ45 port, while the other end with a 4-pin connector connects to the lower left diagnostic port on the driver's side of the car. The cable is readily available on Aliexpress or Amazon.
 
-<!--![Diagnostic Cable for Tesla ToolBox](/assets/images/Tesla-Toolbox/diagnostic-cable.png "Diagnostic Cable for Tesla ToolBox")-->
+<p align="center">
+  <img alt="Diagnostic Cable for Tesla ToolBox" src="/assets/images/Tesla-Toolbox/diagnostic-cable.png" style="padding: 0;margin:0;">
+  Diagnostic Cable for Tesla ToolBox
+</p>
 
-<img src="/assets/images/Tesla-Toolbox/diagnostic-cable.png" width="400" height="400">
-
-<!--![4-pin diagnostic port on the lower left side of the driver's seat]()-->
-
-<img src="/assets/images/Tesla-Toolbox/4pin-diagnostic-port.png" width="400" height="400">
+<p align="center">
+  <img alt="4-pin diagnostic port on the lower left side of the driver's seat" src="/assets/images/Tesla-Toolbox/4pin-diagnostic-port.png" style="padding: 0;margin:0;">
+  4-pin diagnostic port on the lower left side of the driver's seat
+</p>
 
 
 Tesla Toolbox can be accessed through the following link: [https://toolbox.tesla.com/](https://toolbox.tesla.com/), and requires a paid subscription. To connect your vehicle, visit the link and click on the gray box located in the upper right corner.
@@ -83,7 +84,7 @@ clear_dtcs
 
 Here is a partial output of the `list_task` command. The `name` field is the command that you can request.
 
-```json
+```python
 			.
 			.
 			.
@@ -99,7 +100,7 @@ Here is a partial output of the `list_task` command. The `name` field is the com
   "message": {
     "command": "execute",
     "args": {
-      "name": **"Common/tasks/PROC_DAS_X_CAPTURE-IMAGE"**
+      "name": "Common/tasks/PROC_DAS_X_CAPTURE-IMAGE"
     }
   },
   "name": "PROC_DAS_X_CAPTURE-IMAGE",
@@ -110,7 +111,7 @@ Here is a partial output of the `list_task` command. The `name` field is the com
 			.
 ```
 
-While executing the tasks obtained by list_task one by one, I guessed that the TEST-BASH_ICE_X_CHECK-DISK-USAGE command is internally bound to the `du` command, and after checking some options of the du command are not filtered, I confirmed that I can list the desired directory files by setting options such as `-ahld100`.
+While executing the tasks obtained by list_task one by one, I guessed that the __TEST-BASH_ICE_X_CHECK-DISK-USAGE__ command is internally bound to the `du` command, and after checking some options of the du command are not filtered, I confirmed that I can list the desired directory files by setting options such as `-ahld100`.
 
 ```json
 {
@@ -214,17 +215,18 @@ Since now i can see which file is reside inside CID/ICE system, i searched up so
 
 Tesla's CID has an open ssh port and ssh authentication with a sign certificate, so I thought it was possible to access ssh if I could read the key that exists on the system, and I looked at the commands for reading files among the available tasks, but there was strong whitelisting filtering, so I couldn't bypass it.
 
-### Stored XXS
+### Stored XSS
 
-The [http://192.168.90.100:8080](http://192.168.90.100:8080/) endpoint records completed diagnostic tasks and their execution results, and the "name":"Common/tasks/TEST-BASH_ICE_X_CHECK-DISK-USAGE" of the endpoint is not XXS filtered, resulting in a stored xxs vulnerability.
+The [http://192.168.90.100:8080](http://192.168.90.100:8080/) endpoint records completed diagnostic tasks and their execution results, and the **"name":"Common/tasks/TEST-BASH_ICE_X_CHECK-DISK-USAGE"** of the endpoint is not XSS filtered, resulting in a Stored XSS vulnerability.
 
 An attacker could inject malicious javascript code into the “name” argument and then execute the attacker's javascript code when the endpoint is accessed by the service center.
 
 Unfortunately, I didn't take a screenshot and also this bug has been patched in the latest version.
 
-### SOME/IP?
+### SOME/IP
 
 Seems interesting Tesla has vsomeip which is for someip communication.
+We'll cover SOME/IP in more detail in another post.
 
 ```python
 "22.5K\t/usr/bin/vsomeipd",
@@ -457,7 +459,7 @@ if __name__ == "__main__":
 
 ## Low impact
 
-One of the most important things about finding bugs is that just because something causes an unintended behavior doesn't mean it's a vulnerability. Since TESLA's diagnostic function requires a local connection to a PC, and even a DOS attack can be reversed by rebooting the vehicle, the impact of the attack is minimal, so it's hard to come up with a valid attack scenario, so I didn't get any recognition for the bug I reported.
+One of the most important things about finding bugs is that just because something causes an unintended behavior doesn't mean it's a vulnerability. Since Tesla's diagnostic function requires a local connection to a PC, and even a DOS attack can be reversed by rebooting the vehicle, the impact of the attack is minimal, so it's hard to come up with a valid attack scenario, so I didn't get any recognition for the bug I reported.
 
 It's unfortunate, but the point is that I enjoyed the process of finding vulnerabilities and learned a lot, and I'm happy to share the experience.
 
