@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "An attempt to find bugs on the Tesla toolbox"
-tags: [Tesla, Websocket, Diagnostic, DoS, Directory listing, XSS]
+tags: [Tesla, ToolBox, Websocket, Diagnostic, DoS, Directory listing, XSS]
 ---
 
 Several months ago, I had the opportunity to examine the Toolbox, a web-based diagnostic interface for Tesla vehicles. During that time, I was using an older firmware version, which enabled me to discover a few bugs that had already been patched.
