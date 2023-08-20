@@ -211,8 +211,10 @@ asyncio.get_event_loop().run_until_complete(webs_fuzz())
 
 Since now i can see which file is reside inside CID/ICE system, i searched up some files of the Toolbox webserver. The location of the webserver directory is `/opt/odin/core/engine/` and unfortunatly most of the files are whiteliested and I can only read a image file like `/opt/odin/core/engine/assets/img/starman_750x750.png`
 
-![starman_750x750.png](/assets/images/Tesla-Toolbox/starman750x750.png)
-
+<p align="center">
+  <img alt="Diagnostic Cable for Tesla ToolBox" src="/assets/images/Tesla-Toolbox/starman750x750.png" style="padding: 0;margin:0;">
+  starman_750x750.png
+</p>
 
 Tesla's CID has an open ssh port and ssh authentication with a sign certificate, so I thought it was possible to access ssh if I could read the key that exists on the system, and I looked at the commands for reading files among the available tasks, but there was strong whitelisting filtering, so I couldn't bypass it.
 
@@ -255,7 +257,7 @@ We'll cover SOME/IP in more detail in another post.
 "1.4M\t/usr/lib/libvsomeip.so.2.7.0",
 ```
 
-## The Non Patched bug
+## The Non Patched
 
 While looking at the arguments of the websocket connection using a web proxy tool, I noticed something strange.
 
