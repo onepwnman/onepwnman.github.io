@@ -16,5 +16,5 @@ permalink: /about/
 
 <br> <br> <br> 
 ### Contact me
-__*If you have any questions don't hesitate to contact me*__  
+__If you have any questions, please feel free to contact me__  
 [onepwnman@gmail.com](mailto:onepwnman@gmail.com)
