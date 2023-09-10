@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Easyprint, 3D Printing Web Interface"
-tags: [Project, Web, Flask, 3D Printer]
+tags: [Web, Flask, 3D Printer]
 reference: 
   - "프로젝트 링크" : https://github.com/onepwnman/easyprint
 
