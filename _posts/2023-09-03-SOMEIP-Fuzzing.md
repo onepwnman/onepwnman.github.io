@@ -314,7 +314,9 @@ In this case, the session ID and client ID can be set to 0, and the protocol ver
 
 The result of the above code is encoded as bytes and sent with the following values
 
-```b0be00010000003300000000010100000000001600000007efbbbf6161610000000007efbbbf626262000000000c0200000007efbbbf6363630003```
+```
+b0be00010000003300000000010100000000001600000007efbbbf6161610000000007efbbbf626262000000000c0200000007efbbbf6363630003
+```
 
 <br>
 We are now ready to send SOME/IP messages. However, we do not know the IP address and port to send the message to, the protocol type (TCP or UDP), the Service ID and Method ID, the message type (Request/Response or Event), or the data types that are serialized in the payload. If we fuzz by sending random data, the coverage will be very low. Therefore, we need to learn about SOME/IP-SD messages to know each element.
