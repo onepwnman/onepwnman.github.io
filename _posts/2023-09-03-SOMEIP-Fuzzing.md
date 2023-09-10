@@ -315,7 +315,9 @@ In this case, the session ID and client ID can be set to 0, and the protocol ver
 The result of the above code is encoded as bytes and sent with the following values
 
 ```
-b0be00010000003300000000010100000000001600000007efbbbf6161610000000007efbbbf626262000000000c0200000007efbbbf6363630003
+b0be0001000000330000000001010000000000
+1600000007efbbbf6161610000000007efbbbf
+626262000000000c0200000007efbbbf6363630003
 ```
 
 <br>
