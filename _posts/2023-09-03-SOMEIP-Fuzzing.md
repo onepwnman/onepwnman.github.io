@@ -5,7 +5,7 @@ tags: [BMW, SOME/IP, Fuzzing]
 ---
 
 In 2022, as part of the BMW Private Bug Bounty program, I reported several security vulnerabilities in applications using the SOME/IP protocol in the head units of BMW vehicle called MGU22.
-As a result, I was honored to be included in the BMW Recognition of Security Exports (https://www.bmwgroup.com/en/general/Security.html) by the BMW automotive group.
+As a result, I was honored to be included in the [BMW Recognition of Security Exports](https://www.bmwgroup.com/en/general/Security.html) by the BMW automotive group.
 In this article, I'll introduce you to the SOME/IP protocol and share how I fuzzed SOME/IP applications to find vulnerabilities.
 
 <br>
@@ -35,7 +35,7 @@ The difference between Request/Response and Fire & Forget is whether there is a 
 
 
 <br>
-##SOME/IP Packet Structure
+## SOME/IP Packet Structure
 To fuzz SOME/IP, you first need to understand the SOME/IP packet structure.
 The figure below shows the SOME/IP packet header format from the standard document.
 
@@ -91,14 +91,16 @@ Let's take an example. Most recent head units have Bluetooth functionality, whic
 <br>
 ## Payload Structure
 SOME/IP payloads are serialized before transmission, and the receiving side receives the data through the deserialization process. Therefore, random fuzzing, which sends random bytes to the payload, is unlikely to deliver the desired data to the application layer.
-</p>
+
 <p align="center">
   <img alt="Diagnostic Cable for Tesla ToolBox" src="/assets/images/someip-fuzzing/serialization.png" style="padding: 0;margin:0;">
 </p>
 
+<br>
 In order to perform structured fuzzing, you need to understand the variable types and serialization of the payload.
 In the actual case of BMW's MGU22, it uses SOME/IP related libraries of COVESA, and the implementation of each data type is in the code of the following [link](https://github.com/COVESA/capicxx-someip-runtime/blob/29cb5c81b67777d594a9ae83eb7d47874b147f7b/src/CommonAPI/SomeIP/OutputStream.cpp).
 
+<br>
 Here, the data types that constitute the payload are shown in a table.
 
 | Data Type | Byte Count  |
@@ -116,7 +118,6 @@ Here, the data types that constitute the payload are shown in a table.
 | Struct  | 0 |
 
 The following examples are code implemented in Python for each data type, and the return value is a hex string.
-
 
 
 ```python
@@ -313,7 +314,7 @@ In this case, the session ID and client ID can be set to 0, and the protocol ver
 
 The result of the above code is encoded as bytes and sent with the following values
 
-`b0be00010000003300000000010100000000001600000007efbbbf6161610000000007efbbbf626262000000000c0200000007efbbbf6363630003`
+```b0be00010000003300000000010100000000001600000007efbbbf6161610000000007efbbbf626262000000000c0200000007efbbbf6363630003```
 
 <br>
 We are now ready to send SOME/IP messages. However, we do not know the IP address and port to send the message to, the protocol type (TCP or UDP), the Service ID and Method ID, the message type (Request/Response or Event), or the data types that are serialized in the payload. If we fuzz by sending random data, the coverage will be very low. Therefore, we need to learn about SOME/IP-SD messages to know each element.
