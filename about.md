@@ -8,8 +8,8 @@ permalink: /about/
 
 
 - **Interested in knowing how things work**
-- **Interested in reinventing the wheel** 
 - **Interested in breaking things** 
+- **Interested in reinventing the wheel** 
 - **Keep learning**
 
       
