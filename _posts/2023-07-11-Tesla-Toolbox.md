@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "An attempt to find bugs on the Tesla toolbox"
+title: "An attempt to find bugs in the Tesla toolbox"
 tags: [Tesla, ToolBox, Websocket, Diagnostic, DoS, Directory listing, XSS]
 ---
 
