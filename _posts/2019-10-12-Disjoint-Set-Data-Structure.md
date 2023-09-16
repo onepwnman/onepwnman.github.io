@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Disjoint-Set(Union-Find) 자료구조"
-tags: [Algorithm & Data Structure, Tree, Union-Find]
+tags: [Algorithm & Data Structure]
 reference: 
   - "Disjoint set"          : https://en.wikipedia.org/wiki/Disjoint-set_data_structure 
   - "Kruskal Algorithm"     : https://en.wikipedia.org/wiki/Kruskal%27s_algorithm
