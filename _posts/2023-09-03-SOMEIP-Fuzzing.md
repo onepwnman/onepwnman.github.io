@@ -18,6 +18,12 @@ One of the Ethernet-based in-vehicle protocols in the AUTOSAR standard is SOME/I
 >As briefly mentioned in my [previous post](https://onepwnman.github.io/Tesla-Toolbox/), Tesla also has vsomeip installed in its systems, but it is unclear whether Tesla uses the SOME/IP protocol in its vehicles.
 
 <br>
+The figure below is a SOME/IP-based communication scheme for an  in-vehicle network.
+<p align="center">
+  <img alt="Diagnostic Cable for Tesla ToolBox" src="/assets/images/someip-fuzzing/someip-connection-scheme.png" style="padding: 0;margin:0;">
+</p>
+
+
 SOME/IP messages can use either TCP or UDP protocols. Additionally, service interfaces are distinguished by port number, so multiple instances of the same interface cannot be provided on the same port.
 
 Messaging types are supported in four ways, as shown in the figure below.
@@ -42,14 +48,15 @@ For more information about subscribe, see the SOME/IP-SD (SOME/IP Service Discov
 
 <br>
 ## SOME/IP Packet Structure
-To fuzz SOME/IP, you first need to understand the SOME/IP packet structure.
-The figure below shows the SOME/IP packet header format from the standard document.
+First, in order to send a normal SOME/IP message, you need to know the SOME/IP header structure.
+The figure below is the SOME/IP header format taken from the standard document.
+
 
 <p align="center">
   <img alt="Diagnostic Cable for Tesla ToolBox" src="/assets/images/someip-fuzzing/someip-packet-structure.png" style="padding: 0;margin:0;">
 </p>
 
-Now, let's take a look at each field of the SOME/IP packet header.
+Now, let's take a look at each field of the SOME/IP header structure.
 
 - Message ID
   - Each service has a unique Service ID.
