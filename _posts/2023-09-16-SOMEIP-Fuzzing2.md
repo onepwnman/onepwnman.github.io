@@ -38,7 +38,7 @@ Messaging types are supported in four ways, as shown in the figure below.
 
 The difference between Request/Response and Fire & Forget is whether there is a response message. Events is a messaging type where the server calls back when an event occurs.
 
-For more information about subscribe, see the SOME/IP-SD (SOME/IP Service Discovery) protocol. We will explain it in more detail in [part 2](https://onepwnman.github.io/SOMEIP-Fuzzing2), but let's first learn about the SOME/IP packet structure.
+For more information about subscribe, see the SOME/IP-SD (SOME/IP Service Discovery) protocol. We will explain it in more detail in [part 2](https://onepwnman.github.io/), but let's first learn about the SOME/IP packet structure.
 
 <br>
 ## SOME/IP Packet Structure
