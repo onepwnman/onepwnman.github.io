@@ -44,7 +44,7 @@ Messaging types are supported in four ways, as shown in the figure below.
 
 The difference between Request/Response and Fire & Forget is whether there is a response message. Events is a messaging type where the server calls back when an event occurs.
 
-For more information about subscribe, see the SOME/IP-SD (SOME/IP Service Discovery) protocol. We will explain it in more detail in [part 2](https://onepwnman.github.io/SOMEIP-Fuzzing2), but let's first learn about the SOME/IP packet structure.
+For more information about subscribe, see the SOME/IP-SD (SOME/IP Service Discovery) message. We will explain it in more detail in [part 2](https://onepwnman.github.io/SOMEIP-Fuzzing2), but let's first learn about the SOME/IP packet structure.
 
 <br>
 ## SOME/IP Packet Structure
@@ -60,9 +60,6 @@ Now, let's take a look at each field of the SOME/IP header structure.
 
 - Message ID
   - Each service has a unique Service ID.
-  - The first bit of the Method ID field indicates whether the message is an event message or not.
-    - If it is 0, the message is not an event message.
-    - If it is 1, the message is an event message.
   - Each service can have multiple methods, and each method has its own ID.
 
 <p align="center">
@@ -87,11 +84,14 @@ Now, let's take a look at each field of the SOME/IP header structure.
   - It usually has a fixed value.
 
 - Message Type
+The Message Type field is different depending on the four messaging types mentioned above. For example, in the case of event messages, the message type is 0x2 `notification`, and the sender does not expect a response.
+
 <p align="center">
   <img alt="Diagnostic Cable for Tesla ToolBox" src="/assets/images/someip-fuzzing/message-type.png" style="padding: 0;margin:0;">
 </p>
 
 - Return Code
+A normal message generally has a return code of 0x00 (E_OK).
 <p align="center">
   <img alt="Diagnostic Cable for Tesla ToolBox" src="/assets/images/someip-fuzzing/return-codes1.png" style="padding: 0;margin:0;">
 </p>
@@ -114,7 +114,7 @@ In order to perform structured fuzzing, you need to understand the variable type
 In the actual case of BMW's MGU22, it uses SOME/IP related libraries of COVESA, and the implementation of each data type is in the code of the following [link](https://github.com/COVESA/capicxx-someip-runtime/blob/29cb5c81b67777d594a9ae83eb7d47874b147f7b/src/CommonAPI/SomeIP/OutputStream.cpp).
 
 <br>
-Here, the data types that constitute the payload are shown in a table.
+Here is a table showing some of the data types that make up the payload.
 
 | Data Type | Byte Count  |
 | --- | --- |
@@ -176,7 +176,7 @@ def _map(k, v):
 
 ```
 
-For example, the Unicode 16 string 'TEST' is expressed as follows.
+For example, the UTF-16 character sequence "TEST" can be represented as follows.
 ```python
 print(_utf16("TEST"))
 
@@ -325,7 +325,7 @@ The code above is for sending a serialized message to the IP address 160.48.199.
 
 In this case, the session ID and client ID can be set to 0, and the protocol version is fixed to 1. The interface version usually has a value between 0 and 3.
 
-The result of the above code is encoded as bytes and sent with the following values
+The result of the above code is encoded as bytes and sent with the following values in hex.
 
 ```python
 
@@ -336,7 +336,7 @@ b0be00010000003300000000010100000000001600000007efbbbf6161610000000007efbbbf6262
 <br>
 We are now ready to send SOME/IP messages. However, we do not know the IP address and port to send the message to, the protocol type (TCP or UDP), the Service ID and Method ID, the message type (Request/Response or Event), or the data types that are serialized in the payload. If we fuzz by sending random data, the coverage will be very low. Therefore, we need to learn about SOME/IP-SD messages to know each element.
 
-SOME/IP-SD stands for SOME/IP Service Discovery Protocol. It is a protocol used to find service instances, detect whether service instances are running, and implement publish/subscribe processing.
+SOME/IP-SD stands for SOME/IP Service Discovery Protocol. It is a message used to find service instances, detect whether service instances are running, and implement publish/subscribe processing.
 
-In Part 2, we will learn about the SOME/IP-SD protocol, connect a PC to the vehicle network, analyze SOME/IP-SD messages, and learn how to fuzz on ports that are already connected.
+In Part 2, we will learn about how the SOME/IP-SD works, connect a PC to the vehicle network, analyze SOME/IP-SD packet structure, and also learn how to fuzz on ports that are already connected.
 
