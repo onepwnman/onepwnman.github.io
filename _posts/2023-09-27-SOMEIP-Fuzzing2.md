@@ -173,9 +173,8 @@ In the case of a head unit, the screen often goes black when a crash occurs, but
 
 Most control units use the CAN protocol today, so there are several detection methods, such as checking DTCs when a crash occurs or checking the response of CAN request messages.
 
-<p align="center">
-  <img alt="Fuzzing SOME/IP" src="" style="padding: 0;margin:0;">
-</p>
+[![Watch the video]()](/assets/images/someip-fuzzing2/telematics_getValue_crash_demo.mp4)
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
@@ -185,6 +184,6 @@ Most control units use the CAN protocol today, so there are several detection me
   <body>
     <h1><u>Example : Video</u></h1>
     <h2>for study</h2>
-    <iframe width="640" height="480" src="/assets/images/someip-fuzzing2/subscribe-event.png" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <iframe width="640" height="480" src="/assets/images/someip-fuzzing2/telematics_getValue_crash_demo.mp4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
   </body>
 </html>
