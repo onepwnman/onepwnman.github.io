@@ -6,7 +6,7 @@ reference:
   - "vsomeip-in-10-minutes" : https://github.com/COVESA/vsomeip/wiki/vsomeip-in-10-minutes#prep
 ---
 
-In the previous [post](https://onepwnman.github.io/SOMEIP-Fuzzing), we learned about the SOME/IP protocol for fuzzing the SOME/IP protocol, and how the SOME/IP header is structured and how payload serialization works. We also said that the SOME/IP-SD protocol is used to obtain the information that goes into the SOME/IP header. From now on, let's take a look at what the SOME/IP-SD protocol is and how the SOME/IP-SD protocol is used when fuzzing the SOME/IP protocol.
+In the previous [post](https://onepwnman.github.io/SOMEIP-Fuzzing), we learned what is SOME/IP protocol and how the SOME/IP header is structured and how payload serialization works. We also talk about that the SOME/IP-SD protocol is used to obtain the information that goes into the SOME/IP header. From now on, let's take a look at what the SOME/IP-SD protocol is and how to make use of SOME/IP-SD protocol to fuzz SOME/IP protocol.
 
 <br>
 ## What is SOME/IP-SD Protocol?
@@ -92,12 +92,13 @@ Options are used to transport additional information to the entries.
 
 
 ## SOME/IP-SD message analysis and fuzzing
-I was provided with a simulation environment of MGU22 by the BMW private bug bounty program. The simulation environment is configured for Raspberry Pi, and the QEMU on the Raspberry Pi simulates the MGU22 environment. A dummy binary running on the Raspberry Pi simulates other controllers connected to MGU22, such as LiDAR, bodyECU, and chassisECU. The environment simulates internal SOME/IP communication and the entire in-vehicle system through communication between the dummy binary and QEMU (MGU22).
+I was provided with a simulation environment of MGU22 by the BMW private bug bounty program. The simulation environment is configured for Raspberry Pi, and the QEMU on the Raspberry Pi simulates the MGU22 environment. A dummy binary running on the Raspberry Pi simulates other controllers connected to MGU22, such as LIDAR, bodyECU, and chassisECU. The environment simulates internal SOME/IP communication and the entire in-vehicle system through communication between the dummy binary and QEMU (MGU22).
 
 For SOME/IP, a network in the 160.48.199.xx range was used. In the case of the MGU22 controller, the IP address 160.48.199.99 was assigned, and body.caraccess was assigned IP address 160.48.199.16, body was assigned 160.48.199.64, and chassis was assigned 160.48.199.93. Other IP addresses, except for 160.48.199.99, are bound to dummy binaries outside of QEMU machine
 
 
 ##### Binding Table
+
 | Address | ECU |
 | --- | --- |
 | 160.48.199.6 | dass |
@@ -120,19 +121,21 @@ For SOME/IP, a network in the 160.48.199.xx range was used. In the case of the M
 | 160.48.199.121 | infotainment |
 | 160.48.199.125 | infrastructure.testability |
 
+
 In the Test Bench environment, it was confirmed that the network of the same range as the virtual environment and the same IP address are used. However, in the case of a real vehicle, each IP address of the dummy binary is bound to a different ECU. In order to connect to the vehicle network in a real vehicle environment and analyze it, the Ethernet interface address of the PC must be changed to an unallocated 160.48.199.xx range and the Ethernet base speed must be changed using a 100BASE-T1 switch. This process is required because the base speed of the vehicle network is different from the Ethernet network of the PC that we commonly use.
+
 Since our fuzzing target IP is 160.48.199.99, which is the MGU22, we can consider two cases.
-The first is fuzzing the service offered by MGU22. (request/response)
-The second is to tamper with the event messages sent to MGU22 by the services that MGU22 subscribes to.
+**The first is fuzzing the service offered by MGU22. (request/response)**
+**The second is to tamper with the event messages sent to MGU22 by the services that MGU22 subscribes to.**
 
-Also, this method can be used if a connection has already been established between MGU22 and the controller.
-If the connection between the dummy binary (ECUs) and QEMU (MGU22) is disconnected, the simulation will end, so we can only modify the messages sent from IP 160.48.199.16 (body.access) to 160.48.199.99 when fuzzing.
+Also, message hooking can be used if a connection has already been established between MGU22 and the controller.
+In the case connection between the dummy binary (ECUs) and QEMU (MGU22) is disconnected, the simulation will end, so we can only modify the messages sent from IP 160.48.199.16 (body.access) to 160.48.199.99 by hooking the message for fuzzing.
 
-However, using a tool like Frida, you can fuzz the SOME/IP communication between other controllers and MGU22 by hooking the messages sent from the dummy binary to QEMU.
+Using a tool like Frida, you can fuzz the SOME/IP communication between other controllers and the MGU22 by hooking the messages sent from the dummy binary to QEMU.
 
-In a real test bench setup environment, you can fuzz by removing one controller from the network, then sending the SOME/IP messages sent by the removed controller from the PC to simulate the normal system state. 
-For example, if you remove the left lidar with the address 160.48.199.74 from the SOME/IP network, then connect the PC to the SOME/IP network and send the packets sent by the left lidar to MGU22, you can simulate a virtual lidar with the PC. You can fuzz by modifying the packets, and this is a common way to fuzz CAN and Ethernet-based vehicle networks. 
-I'll cover the details in another post.
+In a real test bench setup environment, you can remove one controller from the network, then send the SOME/IP messages from the PC to the MGU22 to simulate the normal system state. 
+
+For example, if you remove the left lidar with the address 160.48.199.74 from the SOME/IP network, then connect the PC to the SOME/IP network and send the packets sent by the left lidar to MGU22, you can simulate a virtual lidar with the PC. You can fuzz by modifying the packets, and this is a common way to fuzz CAN or Ethernet-based vehicle networks. 
 
 Let's take a look at the actual SOME/IP-SD message pcap capture now. Wireshark supports the SOMEIP schema from version 3.2.0.
 
@@ -154,6 +157,7 @@ The options array contains IP addresses, protocol types, and port numbers.
 
 Therefore, the summary of the offer service message above is that the IP address 160.48.199.99 is providing a service corresponding to service ID 0xb063 on TCP port 32501.
 In the case of MGU22, offer service was continuously sent when the power was turned on, but if there is no offer service, you can also know the service ID of the service provided by sending a find service message.
+
 In the case of service ID 0xb063, as you do not know the method ID and payload structure, you need to fuzz the method ID and payload randomly. In this case, the payload must be serialized to random data types
 
 <br>
@@ -164,13 +168,13 @@ The second method is to find the service ID that MGU22 subscribes to and send a 
 </p>
 If you can capture the event packet sent to the address 160.48.199.99 as shown in the figure, you can know the structure of the method ID and payload, making fuzzing easier.
 
+<br>
+<br>
 ### DEMO
 The following is an example video of a vulnerability found through fuzzing.
-
 If a process is killed, the recovery manager will restart the process or the MGU22 may reboot.
-
 In the case of a head unit, the screen often goes black when a crash occurs, but in the case of a vehicle control unit without a display, it is difficult to visually identify a crash that occurs through fuzzing, so it is also very important to decide how to detect a crash.
 
-Most control units use the CAN protocol today, so there are several detection methods, such as checking DTCs when a crash occurs or checking the response of CAN request messages.
+Most control units use the CAN protocol today, so there are several detection methods through CAN protocol, such as checking DTCs when a crash occurs or checking the response of CAN request messages.
 
-<iframe width="720" height="576" src="/assets/images/someip-fuzzing2/telematics_getValue_crash_demo.mp4" title="MGU22 Crash DEMO" frameborder="0" allow="accelerometer; clipboard-write; autoplay=0; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="720" height="480" src="/assets/images/someip-fuzzing2/telematics_getValue_crash_demo.mp4" title="MGU22 Crash DEMO" frameborder="0" allow="accelerometer; clipboard-write; autoplay=0; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
