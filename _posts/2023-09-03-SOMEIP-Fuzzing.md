@@ -44,7 +44,7 @@ Messaging types are supported in four ways, as shown in the figure below.
 
 The difference between Request/Response and Fire & Forget is whether there is a response message. Events is a messaging type where the server calls back when an event occurs.
 
-For more information about subscribe, see the SOME/IP-SD (SOME/IP Service Discovery) message. We will explain it in more detail in [part 2](https://onepwnman.github.io/SOMEIP-Fuzzing2), but let's first learn about the SOME/IP packet structure.
+For more information about subscribe, see the SOME/IP-SD (SOME/IP Service Discovery) protocol. We will explain it in more detail in [part 2](https://onepwnman.github.io/SOMEIP-Fuzzing2), but let's first learn about the SOME/IP packet structure.
 
 <br>
 ## SOME/IP Packet Structure
@@ -334,9 +334,9 @@ b0be00010000003300000000010100000000001600000007efbbbf6161610000000007efbbbf6262
 ```
 
 <br>
-We are now ready to send SOME/IP messages. However, we do not know the IP address and port to send the message to, the protocol type (TCP or UDP), the Service ID and Method ID, the message type (Request/Response or Event), or the data types that are serialized in the payload. If we fuzz by sending random data, the coverage will be very low. Therefore, we need to learn about SOME/IP-SD messages to know each element.
+We are now ready to send SOME/IP messages. However, we do not know the IP address and port to send the message to, the protocol type (TCP or UDP), the Service ID and Method ID, the message type (Request/Response or Event), or the data types that are serialized in the payload. If we fuzz by sending random data, the coverage will be very low. Therefore, we need to learn about SOME/IP-SD protocol to know each element.
 
 SOME/IP-SD stands for SOME/IP Service Discovery Protocol. It is a message used to find service instances, detect whether service instances are running, and implement publish/subscribe processing.
 
-In Part 2, we will learn about how the SOME/IP-SD works, connect a PC to the vehicle network, analyze SOME/IP-SD packet structure, and also learn how to fuzz on ports that are already connected.
+In Part 2, we will learn about how the SOME/IP-SD works, connect a PC to the vehicle network, analyze SOME/IP-SD packet structure.
 
