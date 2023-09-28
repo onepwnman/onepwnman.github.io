@@ -112,14 +112,6 @@ For SOME/IP, a network in the 160.48.199.xx range was used. In the case of the M
 | 160.48.199.75 | LIDAR_D_R |
 | 160.48.199.76 | FRR_D_VL |
 | 160.48.199.77 | FRR_D_VR |
-| 160.48.199.78 | FRR_D_HL |
-| 160.48.199.79 | FRR_D_HR |
-| 160.48.199.93 | chassis |
-| 160.48.199.96 | body.interiorillumination |
-| 160.48.199.97 | infotainment |
-| 160.48.199.98 | infotainment.connectivity.sapoverip |
-| 160.48.199.121 | infotainment |
-| 160.48.199.125 | infrastructure.testability |
 
 
 In the Test Bench environment, it was confirmed that the network of the same range as the virtual environment and the same IP address are used. However, in the case of a real vehicle, each IP address of the dummy binary is bound to a different ECU. In order to connect to the vehicle network in a real vehicle environment and analyze it, the Ethernet interface address of the PC must be changed to an unallocated 160.48.199.xx range and the Ethernet base speed must be changed using a 100BASE-T1 switch. This process is required because the base speed of the vehicle network is different from the Ethernet network of the PC that we commonly use.
