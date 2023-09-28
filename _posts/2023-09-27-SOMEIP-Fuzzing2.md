@@ -173,12 +173,4 @@ In the case of a head unit, the screen often goes black when a crash occurs, but
 
 Most control units use the CAN protocol today, so there are several detection methods, such as checking DTCs when a crash occurs or checking the response of CAN request messages.
 
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-  </head>
-  <body>
-    <iframe width="640" height="480" src="/assets/images/someip-fuzzing2/telematics_getValue_crash_demo.mp4" title="MGU22 Crash DEMO" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-  </body>
-</html>
+<iframe width="640" height="480" src="/assets/images/someip-fuzzing2/telematics_getValue_crash_demo.mp4" title="MGU22 Crash DEMO" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
