@@ -130,7 +130,7 @@ However, there is no limit to requestSeed, so you can call requestSeed 624 times
 
 Here is the code to pass security access using the randcrack module on github.
 
-```
+```python
 import can
 import struct
 from randcrack import RandCrack
@@ -186,6 +186,8 @@ The next 0x1C is the total length of the data, and the following 67 is the succe
 `FLAG: bh{i_really_hate_twister}`
 
 
+<br>
+
 ### Custom Firmware
 Here is the description
 
@@ -202,7 +204,7 @@ Based on the challenge description, I need to program custom firmware to solve t
 5. TransferData(0x36): Data transfer
 6. RequestTransferExit(0x37): End firmware update
 
-With this in mind, I started reading the disassembled code from the main function. Along the way, there is a huge case statement that parses UDS messages by service ID. The *caseServiceId* in the figure below corresponds to this code, and the number in the case statement is the service ID.
+With that in mind, I started reading the disassembled code from the main function. Along the way, there is a huge case statement that parses UDS messages by service ID. The *caseServiceId* in the figure below corresponds to this code, and the number in the case statement is the service ID.
 
 <p align="center">
   <img alt="Case clause by serviceId" src="/assets/images/blockharbor-ctf/caseServiceId.png" style="padding: 0;margin:0;">
@@ -251,7 +253,7 @@ The only place where the *_DAT_004f0362* variable set in transferData is used is
 5. Run routineControl
 6. The contents of the transferred file are created and executed in the /tmp/firmware path.
 
-*Beautiful!*
+####*Beautiful!*
 
 Now, all that remains is to write the code.
 
@@ -328,7 +330,5 @@ if __name__ == "__main__":
 After running the script, the flag file was in the /root/flags/root.flag path.
 `FLAG: bh{its_as_easy_as_flashing_your_own_firmware}`
 
+<br>
 Many ECUs are implemented in a similar way to update firmware over UDS like this challenge, so someone with ECU hacking experience could solve this challenge more easily than someone without. I also had a lot of fun solving it, and once again, I would like to thank the blockharbor team for running such a great CTF.  
-
-<br>
-<br>
