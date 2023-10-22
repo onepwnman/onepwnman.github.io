@@ -21,7 +21,7 @@ ISO 14229-1 defines the application layer of UDS and does not include physical o
 
 This means that UDS can be implemented on top of a variety of communication protocols, such as CAN and Ethernet. It is typically implemented on top of CAN communication, but DoIP (Diagnostics over Internet Protocol), which is implemented on top of Ethernet, is also becoming popular for controllers that use Ethernet (IVI, ADAS). 
 
-Automotive vendors call Ethernet UDS (DoIP) by different names. In the case of Hyundai, it is called Ethdiag, and in the case of BMW, it is called hsfz. Of course, each vendor slightly modifies the standard for their own use.
+Automotive vendors call Ethernet UDS (DoIP) by different names. In the case of **Hyundai**, it is called *Ethdiag*, and in the case of **BMW**, it is called *HSFZ*. Of course, each vendor slightly modifies the standard for their own use.
 
 The following is a list of standard UDS services and what UDS can do. For more details, please refer to ISO 14229-1.
 <p align="center">
@@ -42,7 +42,7 @@ The following is a list of standard UDS services and what UDS can do. For more d
 
 Overall, the UDS protocol is a comprehensive diagnostic toolset that allows automotive professionals and diagnostic equipment to interact with vehicles, diagnose problems, perform maintenance tasks, and ensure that vehicles operate safely and efficiently. It is a critical component in modern vehicle servicing and diagnostics.
 <br>
-## Writeup
+## Writeups
 
 The custom firmware challenge is located in the User Space Diagnostics section.
 The firmware file used in the challenge can be obtained by solving challenges in the User Space Diagnostics section.
@@ -73,7 +73,11 @@ If you open it with Ghidra and search for the string **"flag"**, you will find a
   <img alt="Suspicious string" src="/assets/images/blockharbor-ctf/flag-strings.png" style="padding: 0;margin:0;">
 </p>
 
-If you xrefs the string, you will find a large case statement at address *0x407e7a*. If you are familiar with UDS, you can see at a glance that each case matches the UDS functions. At first, I thought that the service ID in the ISO document and the case number were matched one to one, but after looking at it again, it seems that the UDS message is parsed and passed before the function at *0x407e7a* is called, and the case statement and the UDS functions are matched. For example, case 1 can be inferred as the handler for the UDS service ID 0x11 which is *ECU Reset*, and case 5 and case 6 can be requestSeed and SendKey of Security Access, respectively.
+If you xrefs the string, you will find a large case statement at address *0x407e7a*. If you are familiar with UDS, you can see at a glance that each case matches the UDS functions. 
+
+At first, I thought that the service ID in the ISO document and the case number were matched one to one, but after looking at it again, it seems that the UDS message is parsed and passed before the function at *0x407e7a* is called, and the case statement and the UDS functions are matched. 
+
+For example, case 1 can be inferred as the handler for the UDS service ID 0x11 which is *ECU Reset*, and case 5 and case 6 can be requestSeed and SendKey of SecurityAccess, respectively.
 
 <p align="center">
   <img alt="ECU Reset Handler" src="/assets/images/blockharbor-ctf/ecu-reset-handler.png" style="padding: 0;margin:0;">
@@ -126,7 +130,7 @@ However, there is no limit to requestSeed, so you can call requestSeed 624 times
 
 Here is the code to pass security access using the randcrack module on github.
 
-```python
+```
 import can
 import struct
 from randcrack import RandCrack
