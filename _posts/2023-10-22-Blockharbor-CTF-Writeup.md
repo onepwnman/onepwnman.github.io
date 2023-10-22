@@ -8,13 +8,20 @@ reference:
 ---
 
 In August, I participated in the **DEFCON31 Car Hacking Village (CHV)** as a member of my company team and finished fourth. 
-It was an amazing experience, and I would like to participate again next year if I have the opportunity. While preparing for the competition, I noticed that the team that won the CHV once, Blockharbor Security, was running a CTF. 
-I solved a few challenges to prepare for the DEFCON CHV, and among them, the **custom firmware** challenge was the best one, as it explained UDS (ISO-14229) in a good manner. It also had the highest score, so I would like to write a writeup and share it. And also, I would like to thank the Blockharbor team for running an awesome CTF
+While preparing for the competition, I noticed that the team that won the CHV once, Blockharbor Security, was running a CTF. 
+I solved a few challenges to prepare for the DEFCON CHV, and among them, the **custom firmware** challenge was the best one, as it explained UDS (ISO-14229) in a good manner. It also had the highest points, so I would like to write a writeup and share it. And also, I would like to thank the Blockharbor team for running an awesome CTF
 
-Blockharbor CTF is a capture the flag (CTF) focused on automotive cybersecurity. In addition to typical CTF challenges such as web, crypto, reversing, and pwnable, it also has a virtual vehicle environment with a virtual CAN interface set up on an Ubuntu machine. This makes it a great CTF for people who are new to automotive cybersecurity to learn while solving challenges. In particular, the problems contain UDS (ISO-14229), which is essential for the automotive cybersecurity industry.
+Blockharbor CTF is a capture the flag (CTF) focused on automotive cybersecurity. In addition to typical CTF challenges such as web, crypto, reversing, and pwnable, it also has a virtual vehicle environment with a virtual CAN interface set up on an Ubuntu machine. 
+
+This makes it a great CTF for people who are new to automotive cybersecurity to learn while solving challenges. In particular, the challenge contains UDS (ISO-14229), which is essential for the automotive cybersecurity industry.
 
 ## UDS
-UDS stands for Unified Diagnostic Services. It is a protocol used for diagnostic communication between vehicle controllers and is defined in ISO standard 14229. ISO 14229-1 defines the application layer of UDS and does not include physical or link layer information. This means that UDS can be implemented on top of a variety of communication protocols, such as CAN and Ethernet. It is typically implemented on top of CAN communication, but DOIP (Diagnostics over Internet Protocol), which is implemented on top of Ethernet, is also becoming popular for controllers that use Ethernet (IVI, ADAS). Different automotive vendors call Ethernet UDS (DOIP) by different names. In the case of Hyundai, it is called Ethdiag, and in the case of BMW, it is called hsfz. Of course, each vendor slightly modifies the standard for their own use.
+UDS stands for Unified Diagnostic Services. It is a protocol used for diagnostic communication between vehicle controllers and is defined in ISO standard 14229. 
+ISO 14229-1 defines the application layer of UDS and does not include physical or link layer information. 
+
+This means that UDS can be implemented on top of a variety of communication protocols, such as CAN and Ethernet. It is typically implemented on top of CAN communication, but DoIP (Diagnostics over Internet Protocol), which is implemented on top of Ethernet, is also becoming popular for controllers that use Ethernet (IVI, ADAS). 
+
+Automotive vendors call Ethernet UDS (DoIP) by different names. In the case of Hyundai, it is called Ethdiag, and in the case of BMW, it is called hsfz. Of course, each vendor slightly modifies the standard for their own use.
 
 The following is a list of standard UDS services and what UDS can do. For more details, please refer to ISO 14229-1.
 <p align="center">
