@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Secure Boot verification on TriCore"
-tags: [Embedded system]
+tags: [Embedded system, Hardware]
 reference: 
   - "TriCore Reference Manual" : https://www.farnell.com/datasheets/3109944.pdf
   - "TriCore HSM" : https://www.infineon.com/dgdl/Infineon-AURIX_Hardware_Security_Module-Training-v01_01-EN.pdf?fileId=5546d46269bda8df0169ca6e34c62549
@@ -18,22 +18,24 @@ Before we dive into the intricacies of secure boot, let’s take a look at the M
 
 TriCore is a 32-bit microcontroller architecture widely used in the automotive environment, featuring three cores—RISC, DSP, and MCU. It is referred to as 'TriCore' because these three elements are integrated into a single architecture.
 
-The target MCU is **TC27x** series, and the manual can be referenced at https://www.farnell.com/datasheets/3109944.pdf.
+The target MCU is **TC27x** series, and the manual can be referenced at [here](https://www.farnell.com/datasheets/3109944.pdf).
 
 
+<br>
 
 ## PMU
-TriCore ranages flash memory and BootROM in program memory units (PMUs). The following figure shows the address map for PMU0.
+TriCore manages flash memory and BootROM in program memory units (PMUs). The following figure shows the address map for PMU0.
 
 <p align="center">
   <img alt="PMU" src="/assets/images/SecureBoot/pmu.png" style="padding: 0;margin:0;">
 </p>
 
 
-The BootROM contains the initial code that is executed during the power-up cycle when power is on, called SSW (Startup Software).
+The BootROM contains the initial code that is executed during the power-up cycle when power is on, called `SSW (Startup Software)`.
+
 Flash memory is divided into PFlash (Program Flash) and DFlash (Data Flash). The PFlash section holds the code for the bootloader and application codes while the DFlash section contains the user data.
 
-The User Configuration Block (UCB) is also situated in the DFlash area. The UCB is a specific logical sector containing protection settings and other user-configured data.
+The `User Configuration Block (UCB)` is also situated in the DFlash area. The UCB is a specific logical sector containing protection settings and other user-configured data.
 HSM code and data are also stored within both the PFlash and DFlash.
 We'll cover HSM a little later.
 
@@ -212,7 +214,10 @@ Since UCB is a DFlash region, I programmed the UCB DFlash region using Trace32. 
 
 I dumped the initial data of each UCB region that needed to be modified, then modified the dumped content and overwritten it to the flash memory.
 
-```C
+<br> 
+
+```C++
+
 FLASH.RESET
 FLASH.Create 1. 0xAF100800--0xAF100BFF 0x400 TARGET Long ; UCB_HSMCOTP
 FLASH.Create 3. 0xAF100C00--0xAF100FFF 0x400 TARGET Long ; UCB_OTP
@@ -245,7 +250,10 @@ ECHO "Secure Boot Enabled"
 If secure boot is enabled, you can connect a JTAG debugger to modify the bootloader code. After resetting the system, you can verify whether the modified bootloader code is executed after the power-up cycle.
 
 I connected Trace32 to the debug interface using the following commands.
-```C
+
+<br> 
+
+```cpp
 &pw="0x11111111 0x11111111 0x11111111 0x11111111 0x11111111 0x11111111 0x11111111 0x11111111" 
 SYSTEM.OPTION.KEYCODE &pw
 SYSTEM.UP
@@ -259,7 +267,9 @@ Since the bootloader code is located in the PFlash, I dumped the existing bootlo
 
 Then, I modified the binary and programmed the modified bootloader to the PFlash.
 
-```C
+<br> 
+
+```python
 FLASH.RESET
 FLASH.Create 1. 0xA0000000--0xA000BFFF 0x4000 TARGET Long /BootModeHeaDer 0xA0000000--0xA000001F  ; PS0, S0..S2
 FLASH.TARGET 0xC0000000 0xD0000000 0x4000 ~~/demo/tricore/flash/long/tc2.bin
