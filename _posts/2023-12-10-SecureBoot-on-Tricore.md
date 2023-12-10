@@ -216,7 +216,7 @@ I dumped the initial data of each UCB region that needed to be modified, then mo
 
 <br> 
 
-```C++
+```cpp
 
 FLASH.RESET
 FLASH.Create 1. 0xAF100800--0xAF100BFF 0x400 TARGET Long ; UCB_HSMCOTP
@@ -269,7 +269,7 @@ Then, I modified the binary and programmed the modified bootloader to the PFlash
 
 <br> 
 
-```python
+```cpp
 FLASH.RESET
 FLASH.Create 1. 0xA0000000--0xA000BFFF 0x4000 TARGET Long /BootModeHeaDer 0xA0000000--0xA000001F  ; PS0, S0..S2
 FLASH.TARGET 0xC0000000 0xD0000000 0x4000 ~~/demo/tricore/flash/long/tc2.bin
@@ -281,11 +281,11 @@ ECHO "Modified bootloader successfully installed!!"
 
 Running the script will modify the bootloader.
 
-<br> 
-
 <p align="center">
   <img alt="Tampered Bootloader" src="/assets/images/SecureBoot/tampered_bootloader.png" style="padding: 0;margin:0;">
 </p>
+
+<br> 
 
 If you set a breakpoint at the start of the bootloader and modify the bootloader, the bootloader's MAC will have already been calculated before jumping to the bootloader, so the modified bootloader code will be executed once.
 
